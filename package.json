@@ -1,0 +1,51 @@
+{
+  "name": "hot-spot-tracking",
+  "version": "1.2.2",
+  "description": "在托盘上显示热搜排行榜",
+  "main": "./dist/main.js",
+  "author": "Zhou Haixian <2223540637@qq.com>",
+  "license": "GPL-3.0",
+  "scripts": {
+    "start": "tsc && electron .",
+    "build": "tsc && electron-builder"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^17.0.33",
+    "@types/node-schedule": "^2.1.0",
+    "electron": "^18.2.3",
+    "electron-builder": "^23.0.3",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cheerio": "1.0.0-rc.10",
+    "node-schedule": "^2.1.0"
+  },
+  "build": {
+    "appId": "hot-spot-tracking",
+    "productName": "Hot spot tracking",
+    "copyright": "Zhou Haixian",
+    "directories": {
+      "output": "dist/electron"
+    },
+    "win": {
+      "icon": "resources/assets/hot.ico",
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "extraResources": [
+      {
+        "from": "resources/assets",
+        "to": "assets"
+      }
+    ]
+  }
+}
