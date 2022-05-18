@@ -1,5 +1,9 @@
 import { Menu, MenuItemConstructorOptions, shell } from "electron";
-import { HotList, MenuTemplateBuilder, MenuGroupTemplateBuilder } from "./types";
+import {
+  HotList,
+  MenuTemplateBuilder,
+  MenuGroupTemplateBuilder,
+} from "./types";
 
 export function createMenuBuilder(): MenuTemplateBuilder {
   const menuTemplate: MenuItemConstructorOptions[] = [];
@@ -9,7 +13,6 @@ export function createMenuBuilder(): MenuTemplateBuilder {
       label: title,
       submenu: [],
     });
-
     const item: {
       label: string;
       submenu: MenuItemConstructorOptions[];
@@ -17,7 +20,10 @@ export function createMenuBuilder(): MenuTemplateBuilder {
       label: string;
       submenu: MenuItemConstructorOptions[];
     };
-
+    function appendItem(options: MenuItemConstructorOptions) {
+      item.submenu.push(options);
+      return options;
+    }
     function appendLink(title: string, url: string) {
       let length = item.submenu.push({
         label: title,
@@ -25,29 +31,21 @@ export function createMenuBuilder(): MenuTemplateBuilder {
           shell.openExternal(url);
         },
       });
-
       return item.submenu[--length];
     }
-
-    return { appendLink };
+    return { appendLink, appendItem };
   }
 
-  function addMenuItem(title: string, click: () => any) {
-    menuTemplate.push({
-      label: title,
-      click,
-    });
-
+  function addMenuItem(options: MenuItemConstructorOptions) {
+    menuTemplate.push(options);
     return menuTemplate;
   }
 
   function addHotList(hotList: HotList) {
     const submenu = addGroup(hotList.name);
-
     for (const item of hotList.data) {
       submenu.appendLink(item.title, item.url);
     }
-
     return menuTemplate;
   }
 

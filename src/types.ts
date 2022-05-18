@@ -56,12 +56,13 @@ export interface HotList {
 }
 
 export interface MenuGroupTemplateBuilder {
+  appendItem: (options: Electron.MenuItemConstructorOptions) => Electron.MenuItemConstructorOptions,
   appendLink: (title: string, url: string) => Electron.MenuItemConstructorOptions;
 }
 
 export interface MenuTemplateBuilder {
   addGroup: (title: string) => MenuGroupTemplateBuilder;
   build: () => Electron.Menu;
-  addMenuItem: (title: string, click: () => any) => Electron.MenuItemConstructorOptions[];
+  addMenuItem: (options: Electron.MenuItemConstructorOptions) => Electron.MenuItemConstructorOptions[];
   addHotList: (hotList: HotList) => Electron.MenuItemConstructorOptions[];
 }

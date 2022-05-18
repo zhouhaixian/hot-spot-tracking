@@ -1,4 +1,4 @@
-import { app, nativeImage, Tray } from "electron";
+import { app, nativeImage, shell, Tray } from "electron";
 import { createMenuBuilder } from "./createMenuBuilder";
 import {
   getBaiduHotList,
@@ -31,8 +31,30 @@ export function createTray() {
     menuBuilder.addHotList(await getWeiboHotList());
     menuBuilder.addHotList(await getBilibiliHotList());
 
-    menuBuilder.addMenuItem("刷新", refreshContent);
-    menuBuilder.addMenuItem("退出", app.quit);
+    menuBuilder.addMenuItem({
+      label: "刷新",
+      click: refreshContent,
+    });
+
+    menuBuilder.addMenuItem({
+      label: "自启动",
+      type: "checkbox",
+      checked: app.getLoginItemSettings().openAtLogin,
+      click: () =>
+        app.setLoginItemSettings({
+          openAtLogin: !app.getLoginItemSettings().openAtLogin,
+        }),
+    });
+
+    menuBuilder.addMenuItem({
+      label: "Github",
+      click: () => shell.openExternal("https://github.com/zhouhaixian/hot-spot-tracking")
+    })
+
+    menuBuilder.addMenuItem({
+      label: "退出",
+      click: app.quit,
+    });
 
     tray.setContextMenu(menuBuilder.build());
   }
