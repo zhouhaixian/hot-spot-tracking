@@ -45,6 +45,15 @@ export interface BaiduHotListDataCardsItem {
   updateTime: string;
 }
 
+export interface FSearchHotListItem {
+  title: string,
+  link: string
+}
+
+export interface FSearchHotList {
+  topics: FSearchHotListItem[]
+}
+
 export interface HotListItem {
   title: string;
   url: string;
@@ -55,13 +64,13 @@ export interface HotList {
   data: HotListItem[];
 }
 
-export interface MenuGroupTemplateBuilder {
+export interface MenuGroupBuilder {
   appendItem: (options: Electron.MenuItemConstructorOptions) => Electron.MenuItemConstructorOptions,
   appendLink: (title: string, url: string) => Electron.MenuItemConstructorOptions;
 }
 
-export interface MenuTemplateBuilder {
-  addGroup: (title: string) => MenuGroupTemplateBuilder;
+export interface MenuBuilder {
+  addGroup: (title: string) => MenuGroupBuilder;
   build: () => Electron.Menu;
   addMenuItem: (options: Electron.MenuItemConstructorOptions) => Electron.MenuItemConstructorOptions[];
   addHotList: (hotList: HotList) => Electron.MenuItemConstructorOptions[];

@@ -3,6 +3,7 @@ import { createMenuBuilder } from "./createMenuBuilder";
 import {
   getBaiduHotList,
   getBilibiliHotList,
+  getFSearchHotList,
   getWeiboHotList,
 } from "./provider";
 import path from "path";
@@ -30,6 +31,7 @@ export function createTray() {
     menuBuilder.addHotList(await getBaiduHotList());
     menuBuilder.addHotList(await getWeiboHotList());
     menuBuilder.addHotList(await getBilibiliHotList());
+    menuBuilder.addHotList(await getFSearchHotList())
 
     menuBuilder.addMenuItem({
       label: "刷新",

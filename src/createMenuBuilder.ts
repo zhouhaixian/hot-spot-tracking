@@ -1,22 +1,22 @@
 import { Menu, MenuItemConstructorOptions, shell } from "electron";
 import {
   HotList,
-  MenuTemplateBuilder,
-  MenuGroupTemplateBuilder,
+  MenuBuilder,
+  MenuGroupBuilder,
 } from "./types";
 
-export function createMenuBuilder(): MenuTemplateBuilder {
-  const menuTemplate: MenuItemConstructorOptions[] = [];
+export function createMenuBuilder(): MenuBuilder {
+  const menu: MenuItemConstructorOptions[] = [];
 
-  function addGroup(title: string): MenuGroupTemplateBuilder {
-    let length = menuTemplate.push({
+  function addGroup(title: string): MenuGroupBuilder {
+    let length = menu.push({
       label: title,
       submenu: [],
     });
     const item: {
       label: string;
       submenu: MenuItemConstructorOptions[];
-    } = menuTemplate[--length] as {
+    } = menu[--length] as {
       label: string;
       submenu: MenuItemConstructorOptions[];
     };
@@ -37,8 +37,8 @@ export function createMenuBuilder(): MenuTemplateBuilder {
   }
 
   function addMenuItem(options: MenuItemConstructorOptions) {
-    menuTemplate.push(options);
-    return menuTemplate;
+    menu.push(options);
+    return menu;
   }
 
   function addHotList(hotList: HotList) {
@@ -46,11 +46,11 @@ export function createMenuBuilder(): MenuTemplateBuilder {
     for (const item of hotList.data) {
       submenu.appendLink(item.title, item.url);
     }
-    return menuTemplate;
+    return menu;
   }
 
   function build() {
-    return Menu.buildFromTemplate(menuTemplate);
+    return Menu.buildFromTemplate(menu);
   }
 
   return { build, addGroup, addMenuItem, addHotList };
