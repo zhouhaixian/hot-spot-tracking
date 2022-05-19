@@ -19,11 +19,13 @@ export async function getBilibiliHotList(): Promise<HotList> {
   const $ = load(html);
 
   const list: HotListItem[] = [];
-  $("a.title").each((index, element) => {
-    const title = $(element).text();
-    const url = $(element).attr("href")!;
+  $("div.info").each((index, element) => {
+    const anchorElement = $(element).find("a.title")
+    const title = anchorElement.text();
+    const url = anchorElement.attr("href")!;
+    const upName = $(element).find("span.data-box.up-name").text().replaceAll(" ", "")
     list.push({
-      title: `${index + 1}.  ${title}`,
+      title: `${index + 1}.  🆙${upName}:  ${title}`,
       url: `https:${url}`,
     });
   });
