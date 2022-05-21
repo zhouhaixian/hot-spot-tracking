@@ -1,26 +1,31 @@
 {
   "name": "hot-spot-tracking",
-  "version": "1.4.7",
+  "version": "1.5.0",
   "description": "在托盘上显示热搜排行榜",
   "main": "./dist/main.js",
   "author": "Zhou Haixian <2223540637@qq.com>",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "tsc && electron .",
-    "build": "tsc && electron-builder"
+    "start": "tsc && cross-env NODE_ENV=DEV electron .",
+    "build": "rimraf dist && tsc && electron-builder",
+    "release": "rimraf dist && tsc && electron-builder -p always",
+    "clean": "rimraf dist"
   },
   "private": true,
   "devDependencies": {
     "@types/node": "^17.0.33",
     "@types/node-schedule": "^2.1.0",
+    "cross-env": "^7.0.3",
     "electron": "^18.2.3",
     "electron-builder": "^23.0.3",
+    "rimraf": "^3.0.2",
     "tslib": "^2.4.0",
     "typescript": "^4.6.4"
   },
   "dependencies": {
     "axios": "^0.27.2",
     "cheerio": "1.0.0-rc.10",
+    "electron-updater": "^5.0.1",
     "node-schedule": "^2.1.0"
   },
   "build": {
@@ -32,6 +37,11 @@
     },
     "win": {
       "target": "nsis"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "zhouhaixian",
+      "repo": "hot-spot-tracking"
     },
     "icon": "resources/assets/hot.ico",
     "nsis": {
