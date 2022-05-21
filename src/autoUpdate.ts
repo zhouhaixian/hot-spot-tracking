@@ -8,8 +8,8 @@ export function autoUpdate() {
   autoUpdater.setFeedURL(url)
   autoUpdater.checkForUpdates();
 
-  const rule = "* 5 * * * *";
-  scheduleJob(rule, autoUpdater.checkForUpdates);
+  const rule = "* 30 * * * *";
+  scheduleJob(rule, () => autoUpdater.checkForUpdates());
 
   autoUpdater.on("update-downloaded", () => {
     autoUpdater.quitAndInstall();
